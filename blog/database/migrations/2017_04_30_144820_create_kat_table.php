@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogTable extends Migration
+class CreateKatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateBlogTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_artikel', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('judul');
-            $table->text('isi');
-            $table->string('kategori');
-        });
+      Schema::create('tbl_kategori', function (Blueprint $table) {
+          $table->increments('id');
+          $table->string('kategori');
+      });
     }
 
     /**
@@ -28,6 +26,6 @@ class CreateBlogTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_artikel');
+        Schema::drop('tbl_kategori');
     }
 }
