@@ -3,6 +3,11 @@
 @section('blog', 'active')
 
 @section('body')
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $errors)
+            <div class="alert alert-danger">{{ $errors }}</div>
+        @endforeach
+    @endif
 
     <form action="<?= url('/blog/'.$post->id) ?>" method="post">
         <label>Judul</label>
@@ -12,14 +17,16 @@
         <textarea class="form-control" name="isi" rows="8" cols="80">{{ $post->isi }}</textarea><br/>
 
         <label>Kategori</label>
-        <ul style="padding:0;">
-            <li class="label label-info">Bla</li>
-            <li class="label label-info">Bla</li>
-            <li class="label label-info">Bla</li>
-            <li class="label label-info">Bla</li>
-
-            <li class="pull-right"><a href="#">Edit Kategori</a></li>
-        </ul>
+        <select class="form-control" name="kategori">
+            @foreach($kategori as $kategori)
+                @if($kategori->id == $post->kategori)
+                    {{ $selected = 'selected' }}
+                @else
+                    {{ $selected = '' }}
+                @endif
+                <option value="{{ $kategori->id }}" {{ $selected }}>{{ $kategori->kategori }}</option>
+            @endforeach
+        </select>
         <br/>
 
         <input class="btn btn-success" type="submit" name="submit" value="Ubah">

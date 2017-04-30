@@ -22,7 +22,7 @@
 												<li><a href="{{ url('/') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
 											  <li class="@yield('user')"><a href="{{ url('/user') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; User</a></li>
                         <li class="@yield('blog')"><a href="{{ url('/blog') }}"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Blog</a></li>
-                        <li class="@yield('kategori')"><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp; Kategori</a></li>
+                        <li class="@yield('kategori')"><a href="{{ url('/kategori') }}"><span class="glyphicon glyphicon-tag"></span>&nbsp; Kategori</a></li>
                     </ul>
                 </div>
             </div>

@@ -103,13 +103,15 @@ class UserController extends Controller
     public function logout()
     {
         session()->flush();
-        return redirect('/blog');
+        return redirect('/');
     }
 
     public function edit($id)
     {
         $this->isLogin();
-        $this->isAdmin();
+        if ($id != session('user_id')) {
+            $this->isAdmin();
+        }
 
         $users = User::find($id);
         return view('user/edit', ['users' => $users]);
@@ -118,7 +120,9 @@ class UserController extends Controller
     public function editval(Request $request, $id)
     {
         $this->isLogin();
-        $this->isAdmin();
+        if ($id != session('user_id')) {
+            $this->isAdmin();
+        }
 
         $this->validate($request, [
             'fname' => 'required',
@@ -144,13 +148,19 @@ class UserController extends Controller
             'level' => $request->level
         ]);
 
-        return redirect('/user');
+        if ($id != session('user_id')) {
+            return redirect('/user');
+        } else {
+            return redirect('/user/edit/'.$id);
+        }
     }
 
     public function upass($id)
     {
         $this->isLogin();
-        $this->isAdmin();
+        if ($id != session('user_id')) {
+            $this->isAdmin();
+        }
 
         $users = User::find($id);
         return view('user/upass', ['users' => $users]);
@@ -159,7 +169,9 @@ class UserController extends Controller
     public function upassval(Request $request, $id)
     {
         $this->isLogin();
-        $this->isAdmin();
+        if ($id != session('user_id')) {
+            $this->isAdmin();
+        }
 
         $this->validate($request, [
             'passwordlama' => 'required',
@@ -187,7 +199,7 @@ class UserController extends Controller
     {
         $this->isLogin();
         $this->isAdmin();
-        
+
         $user = User::find($id)->delete();
         return redirect('/user');
     }

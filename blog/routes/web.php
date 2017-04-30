@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'BlogController@index');
+Route::get('/blog/filter/{text}', 'BlogController@filter');
 
 Route::get('/blog', 'BlogController@cpanel');
 
@@ -34,3 +35,13 @@ Route::post('/user/upassval/{id}', 'UserController@upassval');
 Route::get('/user/delete/{id}', 'UserController@delete');
 
 Route::get('/user/logout', 'UserController@logout');
+
+
+Route::get('/kategori', 'KatController@index');
+Route::get('/kategori/tambah', 'KatController@tambah');
+Route::post('/kategori/tambahval', 'KatController@tambahval');
+
+Route::get('/kategori/ubah/{text}', 'KatController@ubah');
+Route::post('/kategori/ubahval/{text}', 'KatController@ubahval');
+
+Route::get('/kategori/hapus/{text}', 'KatController@hapus');

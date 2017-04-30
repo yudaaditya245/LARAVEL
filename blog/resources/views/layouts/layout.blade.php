@@ -26,11 +26,23 @@
 
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-
+								@if(isset($kategori) > 0)
+										@foreach($kategori as $kat)
+												@if(isset($id) && $id == $kat->id)
+														<li class="active"><a href="<?= url('/blog/filter/'.$kat->id) ?>">{{ $kat->kategori }}</a></li>
+												@else
+														<li><a href="<?= url('/blog/filter/'.$kat->id) ?>">{{ $kat->kategori }}</a></li>
+												@endif
+										@endforeach
+								@endif
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							@if(session('is_login') == 1)
-				      <li><a href="{{ url('/user') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
+									@if(session('level') == 0)
+									<li><a href="<?= url('/user/edit/'.@session('user_id')) ?>"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
+									@else
+									<li><a href="{{ url('/user') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
+									@endif
 							<li><a href="{{ url('/user/logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 							@else
 							<li><a href="{{ url('/user/register') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; Register</a></li>

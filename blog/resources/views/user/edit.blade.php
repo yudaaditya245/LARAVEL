@@ -46,6 +46,11 @@
                     <option value="1">Admin</option>
                     <option value="0" SELECTED>Member</option>
                 </select>
+            @elseif(session('level') == 0)
+                <select class="form-control" name="level">
+                    <option value="1" disabled>Admin</option>
+                    <option value="0" SELECTED>Member</option>
+                </select>
             @else
                 <select class="form-control" name="level">
                     <option value="1" SELECTED>Admin</option>
@@ -71,7 +76,9 @@
         <br/>
 
         <input class="btn btn-success" type="submit" name="update" value="Update">
+        @if(session('level') == 1)
         <a class="btn btn-danger" href="{{ url('/user') }}">Cancel</a>
+        @endif
 
         {{ csrf_field() }}
     </form>

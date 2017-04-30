@@ -9,13 +9,22 @@
         <tr>
             <th>Id</th>
             <th>Post</th>
+            <th>Kategori</th>
             <th>Action</th>
         </tr>
 
-        @foreach($post as $post)
+
+        @foreach ($post as $post)
         <tr>
             <td>{{ $post->id }}</td>
             <td>{{ $post->judul }}</td>
+
+            @foreach ($kategori as $kat)
+                @if ($kat->id == $post->kategori)
+                    <td>{{ $kat->kategori }}</td>
+                @endif
+            @endforeach
+
             <td>
                 <a class="btn btn-success" href="<?= url('/blog/'.$post->id.'/update') ?>"><span class="glyphicon glyphicon-edit"></span></a>
                 <a class="btn btn-danger" href="<?= url('/blog/'.$post->id.'/delete') ?>"><span class="glyphicon glyphicon-trash"></span></a>

@@ -17,6 +17,14 @@
         @else
             {{ $row->isi }}
         @endif
+        <br/><br/>
+        @if(isset($kategori) > 0)
+            @foreach($kategori as $kat)
+                @if($row->kategori == $kat->id)
+                    <b><span class="glyphicon glyphicon-tag"></span>&nbsp; <a href="<?= url('/blog/filter/'.$kat->id) ?>">{{ $kat->kategori }}</a></b>
+                @endif
+            @endforeach
+        @endif
 
 		  	<hr>
     @endforeach
