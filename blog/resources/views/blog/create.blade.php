@@ -1,10 +1,6 @@
-@extends('layouts.layout')
+@extends('layouts.user')
 
-@section('title', 'CREATE DATA')
-
-@section('heading')
-    <a class="btn btn-info" href="<?= url('/blog') ?>"><span class="glyphicon glyphicon-arrow-left"></span></a> &nbsp; TAMBAH ARTIKEL
-@endsection
+@section('blog', 'active')
 
 @section('body')
 
@@ -15,6 +11,7 @@
         <textarea class="form-control" name="isi" rows="8" cols="80"></textarea><br/>
         {{ csrf_field() }}
         <input class="btn btn-success" type="submit" name="submit" value="Tambah">
+        <a class="btn btn-danger" href="{{ url('/blog') }}">Cancel</a>
     </form>
 
 @endsection

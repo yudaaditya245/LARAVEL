@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Blog;
+use App\Models\Blog;
 
 class BlogController extends Controller
 {
@@ -13,6 +13,12 @@ class BlogController extends Controller
         $post = Blog::all();
 
         return view('/blog/home', ['post' => $post]);
+    }
+
+    public function cpanel()
+    {
+        $post = Blog::all();
+        return view('/blog/cpanel', ['post' => $post]);
     }
 
     public function blog($id)
@@ -34,7 +40,7 @@ class BlogController extends Controller
             'isi'   => $request->isi
         ]);
 
-        return redirect('/blog/'.$id);
+        return redirect('/blog');
 
     }
 
