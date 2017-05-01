@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Blog;
 use App\Models\Kategori;
+use App\Models\User;
 
 class BlogController extends Controller
 {
@@ -13,14 +14,24 @@ class BlogController extends Controller
     {
         $post = Blog::all();
         $kat = Kategori::all();
-        return view('/blog/home', ['post' => $post, 'kategori' => $kat]);
+        $user = User::all();
+        return view('/blog/home', ['post' => $post, 'kategori' => $kat, 'user' => $user]);
     }
 
     public function filter($id)
     {
         $post = Blog::where('kategori', $id)->get();
         $kat = Kategori::all();
-        return view('/blog/home', ['post' => $post, 'kategori' => $kat, 'id' => $id]);
+        $user = User::all();
+        return view('/blog/home', ['post' => $post, 'kategori' => $kat, 'id' => $id, 'user' => $user]);
+    }
+
+    public function filterByAuthor($id)
+    {
+      $post = Blog::where('author', $id)->get();
+      $kat = Kategori::all();
+      $user = User::all();
+      return view('/blog/home', ['post' => $post, 'kategori' => $kat, 'id' => $id, 'user' => $user]);
     }
 
     public function isLogin()
@@ -40,9 +51,13 @@ class BlogController extends Controller
     public function cpanel()
     {
         $this->isLogin();
-        $this->isAdmin();
 
-        $post = Blog::all();
+        if (session('level') == 0) {
+            $post = Blog::where('author', session('user_id'))->get();
+        } else {
+            $post = Blog::all();
+        }
+
         $kat = Kategori::all();
         return view('/blog/cpanel', ['post' => $post, 'kategori' => $kat]);
     }
@@ -51,13 +66,47 @@ class BlogController extends Controller
     {
         $post = Blog::find($id);
         $kat = Kategori::all();
-        return view('blog/blog', ['post' => $post, 'kategori' => $kat]);
+        $user = User::all();
+        return view('blog/blog', ['post' => $post, 'kategori' => $kat, 'user' => $user]);
+    }
+
+    public function create()
+    {
+        $this->isLogin();
+
+        $kat = Kategori::all();
+        return view('blog/create', ['kategori' => $kat]);
+    }
+
+    public function post(Request $request)
+    {
+        $this->validate($request, [
+            'judul' => 'required',
+            'isi' => 'required',
+            'kategori' => 'required'
+        ]);
+
+        Blog::create([
+            'judul' => $request->judul,
+            'isi'   => $request->isi,
+            'kategori' => $request->kategori,
+            'author' => session('user_id')
+        ]);
+
+        return redirect('/blog');
     }
 
     public function update($id)
     {
         $this->isLogin();
-        $this->isAdmin();
+
+        $postid = Blog::find($id);
+
+        if (session('level') == 0) {
+            if ($postid->author != session('user_id')) {
+                dd('Anda member tidak dapat mengedit post orang lain');
+            }
+        }
 
         $post = Blog::find($id);
         $kat = Kategori::all();
@@ -82,36 +131,17 @@ class BlogController extends Controller
 
     }
 
-    public function create()
-    {
-        $this->isLogin();
-        $this->isAdmin();
-
-        $kat = Kategori::all();
-        return view('blog/create', ['kategori' => $kat]);
-    }
-
-    public function post(Request $request)
-    {
-        $this->validate($request, [
-            'judul' => 'required',
-            'isi' => 'required',
-            'kategori' => 'required'
-        ]);
-
-        Blog::create([
-            'judul' => $request->judul,
-            'isi'   => $request->isi,
-            'kategori' => $request->kategori
-        ]);
-
-        return redirect('/blog');
-    }
-
     public function delete($id)
     {
         $this->isLogin();
-        $this->isAdmin();
+
+        $postid = Blog::find($id);
+
+        if (session('level') == 0) {
+            if ($postid->author != session('user_id')) {
+                dd('Anda member tidak dapat menghapus post orang lain');
+            }
+        }
 
         $result = Blog::find($id);
         $result->delete();

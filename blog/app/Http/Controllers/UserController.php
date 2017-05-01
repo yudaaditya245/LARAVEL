@@ -32,6 +32,13 @@ class UserController extends Controller
         }
     }
 
+    public function profile($id)
+    {
+        $this->isLogin();
+        $user = User::find($id);
+        return view('user/profile', ['user' => $user]);
+    }
+
     public function login()
     {
          //CEK LOGIN

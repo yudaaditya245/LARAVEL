@@ -20,9 +20,19 @@
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
 												<li><a href="{{ url('/') }}"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+
+
+												<li class="@yield('profile')"><a href="<?= url('/user/profile/'.session('user_id')) ?>"><span class="glyphicon glyphicon-user"></span>&nbsp; Profile</a></li>
+
+												@if (session('level') == 1)
 											  <li class="@yield('user')"><a href="{{ url('/user') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; User</a></li>
+												@endif
+
                         <li class="@yield('blog')"><a href="{{ url('/blog') }}"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Blog</a></li>
+
+												@if (session('level') == 1)
                         <li class="@yield('kategori')"><a href="{{ url('/kategori') }}"><span class="glyphicon glyphicon-tag"></span>&nbsp; Kategori</a></li>
+												@endif
                     </ul>
                 </div>
             </div>

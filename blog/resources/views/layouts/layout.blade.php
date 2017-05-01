@@ -39,9 +39,9 @@
 						<ul class="nav navbar-nav navbar-right">
 							@if(session('is_login') == 1)
 									@if(session('level') == 0)
-									<li><a href="<?= url('/user/edit/'.@session('user_id')) ?>"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
+									<li><a href="<?= url('/user/profile/'.@session('user_id')) ?>"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
 									@else
-									<li><a href="{{ url('/user') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
+									<li><a href="<?= url('/user/profile/'.@session('user_id')) ?>"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ session('fname') }}</a></li>
 									@endif
 							<li><a href="{{ url('/user/logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp; Logout</a></li>
 							@else

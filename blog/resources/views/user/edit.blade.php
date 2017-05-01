@@ -31,13 +31,21 @@
         </div>
         <br/>
 
+        @if(session('user_id') == $users->id)
         <label>Username</label>
         <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
             <input class="form-control" type="text" name="username" value="{{ $users->username }}">
         </div>
         <br/>
-
+        @else
+        <label>Username</label>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input class="form-control" type="text" name="username" value="{{ $users->username }}" readonly>
+        </div>
+        <br/>
+        @endif
         <label>Level</label>
         <div class="input-group col-md-3">
             <span class="input-group-addon"><span class="glyphicon glyphicon-wrench"></span></span>
@@ -70,7 +78,7 @@
         @else
         <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-            <input class="form-control" type="password" name="password" value="{{ $users->password }}" disabled>
+            <input class="form-control" type="password" name="password" value="{{ $users->password }}" readonly>
         </div>
         @endif
         <br/>

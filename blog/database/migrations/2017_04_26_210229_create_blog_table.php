@@ -17,7 +17,9 @@ class CreateBlogTable extends Migration
             $table->increments('id');
             $table->string('judul');
             $table->text('isi');
+            $table->integer('author');
             $table->string('kategori');
+            $table->timestamps();
         });
     }
 

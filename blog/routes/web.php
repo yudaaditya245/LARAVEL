@@ -2,6 +2,7 @@
 
 Route::get('/', 'BlogController@index');
 Route::get('/blog/filter/{text}', 'BlogController@filter');
+Route::get('/blog/user/{text}', 'BlogController@filterByAuthor');
 
 Route::get('/blog', 'BlogController@cpanel');
 
@@ -19,6 +20,7 @@ Route::delete('/blog/{text}', 'BlogController@delete');
 
 
 Route::get('/user', 'UserController@index');
+Route::get('/user/profile/{text}', 'UserController@profile');
 
 Route::post('/user/vallog', 'UserController@vallog');
 Route::get('/user/login', 'UserController@login');
